@@ -16,7 +16,7 @@ export const AppDataSource = new DataSource({
   entities: [WeatherData, District],
   migrations: ["dist/migrations/*.js"],
   synchronize: true,
-  logging: true,
+  logging: ["error", "warn"],
 });
 
-console.info(AppDataSource.options);
+// console.info(AppDataSource.options);

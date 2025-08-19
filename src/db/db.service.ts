@@ -12,7 +12,7 @@ export class DbService {
     private districtRepository: Repository<District>,
   ) {}
 
-  async fetchAll() {
+  async fetchAll(year: number) {
     const districts = await this.districtRepository.find();
 
     const maxThreads = 14;
@@ -22,7 +22,7 @@ export class DbService {
     const spawnWorker = (district: District) => {
       activeWorkers = activeWorkers + 1;
       const worker = new Worker(workerPath, {
-        workerData: { district },
+        workerData: { district, year },
       });
 
       worker.on("message", (msg) => {
@@ -42,5 +42,6 @@ export class DbService {
     for (let i = 0; i < maxThreads && queue.length > 0; i++) {
       spawnWorker(queue.shift()!);
     }
+    console.log("====================== Finished ======================");
   }
 }
