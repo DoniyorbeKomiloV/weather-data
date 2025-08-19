@@ -21,6 +21,7 @@ export class CreateWeatherPartitions1755089646030
         PRIMARY KEY (id, datetime)
       ) PARTITION BY RANGE (datetime);
     `);
+
     const startYear = 1980;
     const currentYear = new Date().getFullYear();
 
