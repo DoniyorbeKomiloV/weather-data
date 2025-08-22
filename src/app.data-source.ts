@@ -2,7 +2,6 @@ import "dotenv/config";
 import * as dotenv from "dotenv";
 import { DataSource } from "typeorm";
 import { WeatherData } from "./db/entities/db.entity";
-import { District } from "./districts/entities/district.entity";
 
 dotenv.config({ path: __dirname + "/../.env" });
 
@@ -13,7 +12,7 @@ export const AppDataSource = new DataSource({
   username: process.env.DB_USER,
   password: process.env.DB_PASS,
   database: process.env.DB_NAME,
-  entities: [WeatherData, District],
+  entities: [WeatherData],
   migrations: ["dist/migrations/*.js"],
   synchronize: true,
   logging: ["error", "warn"],

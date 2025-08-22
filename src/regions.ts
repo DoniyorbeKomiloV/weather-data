@@ -1,24 +1,25 @@
-interface Region {
+export type Region = {
+  id: number;
   name: string;
   lat: number;
   lon: number;
-}
+};
 
 export const uzbekistanRegions: Region[] = [
-  { name: "Tashkent City", lat: 41.26465, lon: 69.21627 },
-  { name: "Andijan Region", lat: 40.76859, lon: 72.23638 },
-  { name: "Bukhara Region", lat: 40.25042, lon: 63.20322 },
-  { name: "Ferghana Region", lat: 40.45681, lon: 71.28742 },
-  { name: "Jizzakh Region", lat: 40.47064, lon: 67.57085 },
-  { name: "Namangan Region", lat: 41.051, lon: 71.09732 },
-  { name: "Navoiy Region", lat: 42.69886, lon: 64.63377 },
-  { name: "Qashqadaryo Region", lat: 38.89862, lon: 66.04635 },
-  { name: "Samarkand Region", lat: 39.62701, lon: 66.97497 },
-  { name: "Sirdaryo Region", lat: 40.38638, lon: 68.7155 },
-  { name: "Surxondaryo Region", lat: 37.9409, lon: 67.57085 },
-  { name: "Tashkent Region", lat: 41.22132, lon: 69.85974 },
-  { name: "Khorezm Region", lat: 41.35653, lon: 60.85667 },
-  { name: "Republic of Karakalpakstan", lat: 43.80413, lon: 59.4458 },
+  { id: 1, name: "Tashkent City", lat: 41.26465, lon: 69.21627 },
+  { id: 2, name: "Andijan Region", lat: 40.76859, lon: 72.23638 },
+  { id: 3, name: "Bukhara Region", lat: 40.25042, lon: 63.20322 },
+  { id: 4, name: "Ferghana Region", lat: 40.45681, lon: 71.28742 },
+  { id: 5, name: "Jizzakh Region", lat: 40.47064, lon: 67.57085 },
+  { id: 6, name: "Namangan Region", lat: 41.051, lon: 71.09732 },
+  { id: 7, name: "Navoiy Region", lat: 42.69886, lon: 64.63377 },
+  { id: 8, name: "Qashqadaryo Region", lat: 38.89862, lon: 66.04635 },
+  { id: 9, name: "Samarkand Region", lat: 39.62701, lon: 66.97497 },
+  { id: 10, name: "Sirdaryo Region", lat: 40.38638, lon: 68.7155 },
+  { id: 11, name: "Surxondaryo Region", lat: 37.9409, lon: 67.57085 },
+  { id: 12, name: "Tashkent Region", lat: 41.22132, lon: 69.85974 },
+  { id: 13, name: "Khorezm Region", lat: 41.35653, lon: 60.85667 },
+  { id: 14, name: "Republic of Karakalpakstan", lat: 43.80413, lon: 59.4458 },
 ];
 
 export type UzPlace = {

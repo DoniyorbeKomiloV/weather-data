@@ -1,20 +1,21 @@
 import {
   Entity,
   Column,
-  Index,
   CreateDateColumn,
   UpdateDateColumn,
-  PrimaryColumn,
+  PrimaryGeneratedColumn,
 } from "typeorm";
 
 @Entity({ name: "weather_data" })
-@Index(["cityId", "datetime"]) // useful for queries, but PK already ensures uniqueness
 export class WeatherData {
-  @PrimaryColumn({ name: "city_id", type: "int" })
-  cityId: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-  @PrimaryColumn({ type: "timestamp" })
+  @Column("timestamp without time zone")
   datetime: Date;
+
+  @Column("smallint")
+  region: number;
 
   @Column({ type: "real", nullable: true })
   temperature: number;
