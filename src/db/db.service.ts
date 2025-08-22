@@ -2,9 +2,17 @@ import { Injectable } from "@nestjs/common";
 import { Worker } from "worker_threads";
 import { Region, uzbekistanRegions } from "src/regions";
 import * as path from "path";
+import { Repository } from "typeorm";
+import { WeatherData } from "./entities/db.entity";
+import { InjectRepository } from "@nestjs/typeorm";
 
 @Injectable()
 export class DbService {
+  constructor(
+    @InjectRepository(WeatherData)
+    private readonly weatherRepo: Repository<WeatherData>,
+  ) {}
+
   async fetchAll(year: number) {
     const workerPath = path.resolve(__dirname, "workers/worker.js");
     const spawnWorker = (region: Region) => {
@@ -49,5 +57,20 @@ export class DbService {
       spawnWorker(uzbekistanRegions[region - 1]);
       await new Promise((resolve) => setTimeout(resolve, 2000));
     }
+  }
+
+  async getAverageTemperature(
+    start: Date,
+    end: Date,
+    region_id: number,
+  ): Promise<number | null> {
+    const result = await this.weatherRepo
+      .createQueryBuilder("w")
+      .select("AVG(w.temperature)", "avg")
+      .where("w.datetime BETWEEN :start AND :end", { start, end })
+      .andWhere("w.region = :region_id", { region_id })
+      .getRawOne<{ avg: string }>();
+
+    return result?.avg ? parseFloat(result.avg) : null;
   }
 }
