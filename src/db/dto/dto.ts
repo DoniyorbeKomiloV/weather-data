@@ -1,7 +1,7 @@
 import { Type } from "class-transformer";
 import { IsDate, IsInt } from "class-validator";
 
-export class GetAverageTemperatureDto {
+export class GetTemperatureDto {
   @Type(() => Date)
   @IsDate()
   start: Date;

@@ -73,4 +73,55 @@ export class DbService {
 
     return result?.avg ? parseFloat(result.avg) : null;
   }
+
+  async getMaximumTemperature(
+    start: Date,
+    end: Date,
+    region_id: number,
+  ): Promise<number | null> {
+    const result = await this.weatherRepo
+      .createQueryBuilder("w")
+      .select("MAX(w.temperature)", "max")
+      .where("w.datetime BETWEEN :start AND :end", { start, end })
+      .andWhere("w.region = :region_id", { region_id })
+      .getRawOne<{ max: string }>();
+
+    return result?.max ? parseFloat(result.max) : null;
+  }
+
+  async getMinimumTemperature(
+    start: Date,
+    end: Date,
+    region_id: number,
+  ): Promise<number | null> {
+    const result = await this.weatherRepo
+      .createQueryBuilder("w")
+      .select("MIN(w.temperature)", "min")
+      .where("w.datetime BETWEEN :start AND :end", { start, end })
+      .andWhere("w.region = :region_id", { region_id })
+      .getRawOne<{ min: string }>();
+
+    return result?.min ? parseFloat(result.min) : null;
+  }
+
+  async getTemperature(
+    start: Date,
+    end: Date,
+    region_id: number,
+  ): Promise<{ min: string | null; avg: string | null; max: string | null }> {
+    const result = await this.weatherRepo
+      .createQueryBuilder("w")
+      .select("MIN(w.temperature)", "min")
+      .select("AVG(w.temperature)", "avg")
+      .select("MAX(w.temperature)", "max")
+      .where("w.datetime BETWEEN :start AND :end", { start, end })
+      .andWhere("w.region = :region_id", { region_id })
+      .getRawOne<{ min: string; avg: string; max: string }>();
+
+    return {
+      min: result?.min ? result.min : null,
+      avg: result?.avg ? result.avg : null,
+      max: result?.max ? result.max : null,
+    };
+  }
 }

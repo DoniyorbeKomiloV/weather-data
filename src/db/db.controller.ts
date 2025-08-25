@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Param, Post, Query } from "@nestjs/common";
 import { DbService } from "./db.service";
-import { GetAverageTemperatureDto } from "./dto/dto";
+import { GetTemperatureDto } from "./dto/dto";
 
 @Controller("db")
 export class DbController {
@@ -18,8 +18,24 @@ export class DbController {
     return { status: "fetched" };
   }
 
-  @Get("avg-temp")
-  async get(@Query() dto: GetAverageTemperatureDto) {
+  @Get("temp/min")
+  async getMin(@Query() dto: GetTemperatureDto) {
+    const minTemp = await this.dbService.getMinimumTemperature(
+      dto.start,
+      dto.end,
+      dto.region_id,
+    );
+
+    return {
+      region_id: dto.region_id,
+      start: dto.start,
+      end: dto.end,
+      minimum_temperature: minTemp,
+    };
+  }
+
+  @Get("temp/avg")
+  async getAvg(@Query() dto: GetTemperatureDto) {
     const avgTemp = await this.dbService.getAverageTemperature(
       dto.start,
       dto.end,
@@ -31,6 +47,40 @@ export class DbController {
       start: dto.start,
       end: dto.end,
       average_temperature: avgTemp,
+    };
+  }
+
+  @Get("temp/max")
+  async getMax(@Query() dto: GetTemperatureDto) {
+    const maxTemp = await this.dbService.getMaximumTemperature(
+      dto.start,
+      dto.end,
+      dto.region_id,
+    );
+
+    return {
+      region_id: dto.region_id,
+      start: dto.start,
+      end: dto.end,
+      maximum_temperature: maxTemp,
+    };
+  }
+
+  @Get("temp/")
+  async get(@Query() dto: GetTemperatureDto) {
+    const Temp = await this.dbService.getTemperature(
+      dto.start,
+      dto.end,
+      dto.region_id,
+    );
+
+    return {
+      region_id: dto.region_id,
+      start: dto.start,
+      end: dto.end,
+      minimum_temperature: Temp.min,
+      average_temperature: Temp.avg,
+      maximum_temperature: Temp.max,
     };
   }
 }
