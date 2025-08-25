@@ -112,8 +112,8 @@ export class DbService {
     const result = await this.weatherRepo
       .createQueryBuilder("w")
       .select("MIN(w.temperature)", "min")
-      .select("AVG(w.temperature)", "avg")
-      .select("MAX(w.temperature)", "max")
+      .addSelect("AVG(w.temperature)", "avg")
+      .addSelect("MAX(w.temperature)", "max")
       .where("w.datetime BETWEEN :start AND :end", { start, end })
       .andWhere("w.region = :region_id", { region_id })
       .getRawOne<{ min: string; avg: string; max: string }>();
